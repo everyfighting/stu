@@ -1,0 +1,226 @@
+@font-face {
+    font-family: 'TsangerYuYangT03';
+    src: url('./lib/TsangerYuYangT03-W.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+html, body, .joint-app {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    -webkit-user-select: none;
+    -moz-user-select: -moz-none;
+    user-select: none;
+    font-family: TsangerYuYangT03, sans-serif, Arial;
+    overflow: hidden;
+    display: block;
+}
+
+/* ================= Header ================= */
+.app-header {
+    position: relative;
+    width: 100%;
+    height: auto;
+    overflow: hidden;
+    flex: none;
+}
+
+/* ================= Body ================= */
+.app-body {
+    position: relative;
+    flex: 1 1 auto;
+    height: auto;
+    min-height: 0;
+    overflow: hidden;
+}
+
+/* 主体行：Flex 布局，让画布自动填满左右面板之间的剩余空间，与右侧面板等高 */
+.app-body > .flex-1.flex {
+    display: flex;
+    flex-direction: row;
+    align-items: stretch;
+    flex: 1 1 auto;
+    min-height: 0;
+    height: 100%;
+}
+
+/* 小地图 */
+.mini-map {
+    display: inline-block;
+    width: 154px;
+    height: 176px;
+    padding: 4px;
+}
+    
+#mini-resize {
+    position: absolute;
+    right: 4px;
+    bottom: 4px;
+    width: 10px;
+    height: 10px;
+    cursor: nwse-resize;
+    margin: 0;
+    border-radius: 78%;
+    border: 7px solid #6b7280;
+    background-color: #fff;
+}
+
+/* ================= Toolbar ================= */
+.title-container {
+    display: inline-block;
+    position: absolute;
+    height: 100%;
+    left: 36px;
+    right: 35px;
+    box-sizing: border-box;
+    background-color: #f8fafc;
+    z-index: 30;
+    overflow: auto;
+}
+
+/* 左缝隙：细窄分隔条，不参与伸缩，高度随父级（flex stretch）撑满 */
+.left-container {
+    flex: 0 0 auto;
+    width: 2px;
+    max-width: 4px;
+    min-height: 0;
+    overflow: hidden;
+    background-color: #ffffff;
+    border-right: 1px solid #e2e8f0;
+}
+
+/* 主画布：flex-grow 自动填满剩余空间，与右侧面板等高，并保留可见边框（紫色/靛蓝） */
+.main-container {
+    flex: 1 1 auto;
+    min-width: 0;
+    height: 100%;
+    overflow: hidden;
+    border: 2px solid #7c3aed;
+    box-sizing: border-box;
+    border-radius: 8px;
+    background: #ffffff;
+}
+
+#app-resize {
+    flex: 0 0 auto;
+    width: 6px;
+    min-width: 6px;
+    height: 100%;
+    cursor: ew-resize;
+    background-color: transparent;
+    z-index: 30;
+}
+
+#app-resize:hover {
+    background-color: #dbeafe;
+}
+
+/* 右侧检查器：与画布等高，右侧对齐 */
+.right-container {
+    flex: 1 1 auto;
+    width: 320px;
+    max-width: 40%;
+    min-width: 118px;
+    min-height: 0;
+    box-sizing: border-box;
+    overflow-y: auto;
+    overflow-x: hidden;
+    background-color: #ffffff;
+    border-left: 7px solid #e2e8f0;
+}
+
+/* 底部状态栏 */
+.bottom-container {
+    position: relative;
+    width: 100%;
+    height: 32px;
+    background-color: #ffffff;
+    border-top: 1px solid #e2e8f0;
+    z-index: 30;
+    display: flex;
+    align-items: center;
+    padding: 0 16px;
+    box-sizing: border-box;
+    flex: none;
+}
+
+/* ================= 可折叠帮助箭头 ================= */
+.operators-help summary::-webkit-details-marker {
+    display: none;
+}
+
+.operators-help[open] .chevron {
+    transform: rotate(180deg);
+}
+
+.chevron {
+    display: inline-block;
+    transition: transform 300ms ease;
+}
+
+/* ================= 移动端响应式 ================= */
+@media (max-width: 800px) {
+    .app-header {
+        height: auto;
+        overflow: visible;
+    }
+
+    .app-body {
+        height: auto;
+        flex: none;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .mini-map {
+        display: none;
+    }
+
+    .left-container {
+        display: none;
+    }
+
+    .main-container {
+        position: relative;
+        width: 100%;
+        height: 480px;
+        border-radius: 8px;
+    }
+
+    #app-resize {
+        display: none;
+    }
+
+    .right-container {
+        position: fixed;
+        top: 48px;
+        right: 0;
+        bottom: 40px;
+        left: auto;
+        width: 85%;
+        max-width: 320px;
+        min-width: 200px;
+        transform: translateX(100%);
+        box-shadow: 0 12px 32px rgba(119, 90, 190, 0.24);
+        z-index: 50;
+        border-radius: 8px;
+        border-left: 1px solid #e2e8f0;
+    }
+
+    .right-container.drawer-open {
+        transform: translateX(0);
+    }
+
+    .bottom-container {
+        position: relative;
+        height: 40px;
+        padding: 0 16px;
+    }
+}
